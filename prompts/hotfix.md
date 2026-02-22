@@ -15,7 +15,6 @@ description: Apply small mechanical fix directly
 ## Assessment
 
 Load `/obelisk/contracts/contracts-summary.md`.  
-If `## Unprocessed` has entries → also load `/obelisk/contracts/contracts-log.md`.
 
 **Qualifies as hotfix if ALL are true:**
 - Change is mechanical, localized, and clearly defined
