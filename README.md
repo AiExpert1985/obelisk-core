@@ -1,4 +1,3 @@
-
 # Obelisk Framework
 
 _A contract-driven, phase-separated collaboration protocol for stateless AI work on long-lived systems._
@@ -107,14 +106,16 @@ It intentionally trades early friction for long-term stability.
 
 ## Commands
 
-| Command                   | Purpose                            |
-| ------------------------- | ---------------------------------- |
-| `/init-project`           | Initialize project structure       |
-| `/new-task [description]` | create new task and execution plan |
-| `/implement-task`         | Implement, review, archive         |
-| `/ask-project`            | Query project knowledge            |
-| `/help`                   | Show available commands            |
-|                           |                                    |
+| Command                    | Purpose                              |
+|----------------------------|--------------------------------------|
+| `/init-project`            | Initialize project structure         |
+| `/new-task [description]`  | Create new task and execution plan   |
+| `/implement-task`          | Implement, review, archive           |
+| `/ask-project`             | Query project knowledge              |
+| `/suggest-task`            | Get next task suggestions            |
+| `/hotfix [description]`    | Apply small mechanical fix directly  |
+| `/maintain-project`        | Compact and regenerate summaries     |
+| `/help`                    | Show available commands              |
 
 ---
 
@@ -124,30 +125,22 @@ It intentionally trades early friction for long-term stability.
 
 1. Initialize project:
 ```
-
 /init-project
-
 ```
 
-2. create a task:
+2. Create a task:
 ```
-
 /new-task Add user authentication
-
 ```
 
 3. Execute:
 ```
-
 /implement-task
-
 ```
 
 4. Ask questions anytime:
 ```
-
 /ask-project What contracts exist?
-
 ```
 
 ---
@@ -161,6 +154,7 @@ Discovery defines:
 - System identity
 - Core invariants
 - Long-lived architectural intent
+- Product description, screens, flows, and UX philosophy
 
 Outcome: durable foundation independent of chat sessions.
 
@@ -168,9 +162,7 @@ Outcome: durable foundation independent of chat sessions.
 
 ### Task Cycle (Repeats)
 ```
-
 create new (task + plan) → implement → review → archive
-
 ```
 
 Execution resumes from current phase if interrupted.
@@ -187,6 +179,7 @@ Used only when:
 - Diff explains itself
 
 Hotfixes bypass planning but are always recorded in history.
+If the fix turns out to be non-trivial, the model will recommend switching to `/new-task`.
 
 ---
 
@@ -207,9 +200,21 @@ The system evolves with explicit authority and no silent drift.
 
 ---
 
-## System Structure
+## Repository Structure
+
+Obelisk separates framework prompts from project state into two distinct folders:
 ```
-/obelisk/
+/obelisk-core/          # Shared framework prompts (git submodule)
+├── init-project.md
+├── new-task.md
+├── implement-task.md
+├── ask-project.md
+├── suggest-task.md
+├── hotfix.md
+├── maintain-project.md
+└── help.md
+
+/obelisk/               # Project state (local, per-project)
 ├── contracts/
 │   ├── contracts-log.md        # Canonical invariants (append-only)
 │   └── contracts-summary.md    # Active contract projection
@@ -218,14 +223,16 @@ The system evolves with explicit authority and no silent drift.
 │   └── design-summary.md       # Active architectural projection
 ├── history/
 │   └── history-log.md          # Chronological task timeline
+├── project/
+│   └── project-initial-description.md  # Frozen init snapshot
 ├── workspace/                  # Active task state
-├── archive/
-│   ├── completed/
-│   ├── rejected/
-├── guidelines/
-│   └── ai-engineering.md       # Execution constraints
-└── internal/
+└── archive/
+    ├── completed/
+    └── rejected/
 ```
+
+**obelisk-core** is a shared git submodule. Update prompts in `obelisk-core`, then pull and commit the updated submodule in each project.
+**obelisk** is local per project. It holds all state, history, and knowledge specific to that project.
 
 ---
 
@@ -233,7 +240,7 @@ The system evolves with explicit authority and no silent drift.
 
 **Authority Hierarchy (Highest → Lowest):**
 1. Contracts Log
-2. Design Log  
+2. Design Log
 3. Active Task
 4. AI Engineering Rules
 5. History Log
@@ -249,7 +256,11 @@ The system evolves with explicit authority and no silent drift.
 - Contracts Summary — active projection (regenerated)
 - Design Summary — active projection (regenerated)
 
-Summaries never override logs.
+**Reference (Static):**
+- Project Initial Description — frozen init snapshot, never maintained
+
+Summaries never override logs.  
+Project initial description is never authoritative — for orientation and idea surfacing only.
 
 ---
 
