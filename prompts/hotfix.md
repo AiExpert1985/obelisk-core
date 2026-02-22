@@ -1,6 +1,30 @@
 ---
 description: Run small mechanical fix without full task flow
 ---
+
+## Assessment
+
+**A task qualifies as hotfix if:**
+- Scope is narrow, low-risk and clearly defined
+- Change is mechanical and localized
+- No design or architectural decisions required
+- No contract changes required
+
+**Common examples (non-exhaustive):**
+- Typo, formatting, or whitespace fix
+- Simple rename (variable, function, file)
+- Add missing import or dependency
+- Trivial bug fix (null check, off-by-one)
+- Pure UI changes
+
+**If criteria is not met:**
+- Output: 
+  "The fix is not simple, it is better to run it as full task using new-task prompt."
+  if you choose to continue, run "continue"
+  
+  wait for user input, if continue run below
+
+
 ## Execution
 
 Perform exactly the mechanical change described.

@@ -60,32 +60,6 @@ STOP. Wait for response.
 
 ---
 
-## Hotfix Assessment (If Description Provided)
-
-Before starting discovery, assess whether the task qualifies as a hotfix.
-
-**A task qualifies as hotfix if:**
-- Scope is narrow, low-risk and clearly defined
-- Change is mechanical and localized
-- No design or architectural decisions required
-- No contract changes required
-
-**Common examples (non-exhaustive):**
-- Typo, formatting, or whitespace fix
-- Simple rename (variable, function, file)
-- Add missing import or dependency
-- Trivial bug fix (null check, off-by-one)
-- Pure UI changes
-
-**If criteria met:**
-- Output: "Detected simple fix. Running hotfix path."
-- Hotfix is a special execution path and is allowed to execute immediately from this workflow.
-- Call `./internal/hotfix.md` with task_description
-- STOP
-
-
----
-
 ## Code Reconnaissance (Optional, Bounded)
 
 You MAY read code during Task Discovery, but ONLY to answer:
