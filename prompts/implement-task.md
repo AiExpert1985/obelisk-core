@@ -5,9 +5,11 @@ description: Auto-execute task until the end
 
 - `/obelisk/workspace/task.md`
 - `/obelisk/workspace/plan.md`
-- `/obelisk/guidelines/ai-engineering.md`
+- `/obelisk-core/guidelines/ai-engineering.md`
 
-If any are missing → STOP and report path.
+**If any file is missing:**
+- STOP and report missing file
+- OUTPUT: Use `@init-project` to initialize the project.
 
 ---
 

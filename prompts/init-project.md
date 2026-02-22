@@ -3,7 +3,7 @@ description: Initialize new Obelisk project
 ---
 ## Required Files
 
-- `/obelisk/guidelines/ai-engineering.md`
+- `/obelisk-core/guidelines/ai-engineering.md`
 
 ---
 
@@ -289,7 +289,7 @@ _(empty — populated after maintenance)_
 
 ---
 
-### 4. Create Project Init Snapshot
+### 3. Create Project Init Snapshot
 
 Write `/obelisk/project/project-initial-description.md`:
 

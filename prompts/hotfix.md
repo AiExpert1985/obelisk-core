@@ -1,33 +1,43 @@
 ---
 description: Apply small mechanical fix directly
 ---
+## Required Files
+
+- `/obelisk/contracts/contracts-summary.md`
+
+**If any file is missing:**
+- STOP and report missing file
+- OUTPUT: Use `@init-project` to initialize the project.
+
+---
+
 
 ## Assessment
 
-**Qualifies as hotfix if:**
-- Scope is narrow, low-risk, and clearly defined
-- Change is mechanical and localized
-- No design, architectural, or contract changes required
+Load `/obelisk/contracts/contracts-summary.md`.  
+If `## Unprocessed` has entries → also load `/obelisk/contracts/contracts-log.md`.
 
-**If criteria not met:**
+**Qualifies as hotfix if ALL are true:**
+- Change is mechanical, localized, and clearly defined
+- No contract or design changes required
+- For each contract whose domain overlaps the affected code, state:
+  > **[Contract Name]:** [one sentence why this change does not affect it]
+- All relevant contracts cleared. If any cannot be cleared → STOP.
+  Output: "Contract risk detected. Run `/new-task`." No override allowed.
 
-Output: 
-"This looks like a full task. Run /define-task for proper scoping.
-Type `continue` to proceed as hotfix anyway."
+If no contracts are relevant → state: "No relevant contracts identified."
 
-Wait for user input. If `continue` → proceed.
+**If scope or intent is unclear:**
+Output: "This looks like a full task. Run `/new-task`."
+STOP.
 
 ---
 
 ## Execution
 
-Before applying:
-- Identify exact file(s) and line(s) to modify
-- Confirm change preserves existing behavior and contracts
-
-Then:
 - Apply only the minimal necessary modification
 - Do not expand scope, refactor, or touch code outside the direct fix
+- MUST NOT modify contracts or design files
 - If scope grows or uncertainty appears → STOP and report
 
 ---
@@ -38,10 +48,10 @@ Append to `/obelisk/history/history-log.md` under `## Unprocessed`:
 ```markdown
 ## YYYYMMDD-HHMM | [Hotfix Name] | HOTFIX
 
----
-```
+Contracts scanned: [list]
 
 ---
+```
 
 ## Output
 ```

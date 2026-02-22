@@ -8,7 +8,9 @@ description: Compact log and regenerate contracts summary
 - `/obelisk/design/design-log.md`
 - `/obelisk/design/design-summary.md`
 
-Missing → STOP.
+**If any file is missing:**
+- STOP and report missing file
+- OUTPUT: Use `@init-project` to initialize the project.
 
 ---
 

@@ -344,7 +344,7 @@ All sections required. Use “None” if applicable.
 
 ---
 
-## OUTPUT
+## TERMINAL STATE
 
 Output EXACTLY this block. No additions.
 

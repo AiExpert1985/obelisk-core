@@ -1,9 +1,11 @@
 ---
 description: Answer questions about the project
 ---
-## Scope (Read-Only)
 
-You MUST NOT modify files or trigger workflows.
+## Required Files
+
+- `/obelisk/contracts/contracts-summary.md`
+- `/obelisk/design/design-summary.md`
 
 ---
 

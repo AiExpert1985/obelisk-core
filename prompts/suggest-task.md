@@ -6,7 +6,9 @@ description: Suggest next tasks
 - `/obelisk/contracts/contracts-summary.md`
 - `/obelisk/design/design-summary.md`
 
-If any missing → STOP. Output: "Use /init-project to initialize the project."
+**If any file is missing:**
+- STOP and report missing file
+- OUTPUT: Use `@init-project` to initialize the project.
 
 ---
 
