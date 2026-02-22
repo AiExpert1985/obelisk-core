@@ -173,7 +173,7 @@ Append its content exactly as written to
 - Preserve exact contract text
 
 **If contracts-summary `## Unprocessed` contains ≥ 10 entries 
-→ Run `/obelisk/prompts/internal/maintain-contracts.md`**
+→ Run `/obelisk-core/prompts/internal/maintain-contracts.md`**
 
 ---
 
@@ -197,7 +197,7 @@ Append its content (excluding Summary and Deferred) to:
 
 
 **If design-summary `## Unprocessed` contains ≥ 10 entries 
-→ Run `/obelisk/prompts/internal/maintain-desgin.md`** 
+→ Run `/obelisk-core/prompts/internal/maintain-desgin.md`** 
 
 ---
 
