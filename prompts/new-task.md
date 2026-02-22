@@ -44,18 +44,12 @@ If execution is triggered at any point → **STOP immediately**.
 ```
 
 Output exactly:
-Describe your task, or type 'suggest' for task suggestions.
+
+"Describe your task"
 
 STOP. Wait for response.
 
-- If response is 'suggest':
-  - Call `./internal/suggest-task.md`
-  - Output: "Choose a suggestion or describe your task:"
-  - Wait for response
-  - Set task_description = [response]
-
-- Otherwise:
-  - Set task_description = [response]
+ Set task_description = [response]
 
 
 ---

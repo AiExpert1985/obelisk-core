@@ -10,8 +10,11 @@ description: Apply small mechanical fix directly
 - No design, architectural, or contract changes required
 
 **If criteria not met:**
-Output: "This looks like a full task. Run /define-task for proper scoping.
+
+Output: 
+"This looks like a full task. Run /define-task for proper scoping.
 Type `continue` to proceed as hotfix anyway."
+
 Wait for user input. If `continue` → proceed.
 
 ---
