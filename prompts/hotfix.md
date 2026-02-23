@@ -1,34 +1,27 @@
 ---
 description: Apply small mechanical fix directly
 ---
-## Required Files
-
-- `/obelisk/contracts/contracts-summary.md`
-
-**If any file is missing:**
-- STOP and report missing file
-- OUTPUT: Use `@init-project` to initialize the project.
-
----
-
-
 ## Assessment
 
-Load `/obelisk/contracts/contracts-summary.md`.  
+### A task qualifies as hotfix if:
+- Scope is narrow, low-risk and clearly defined
+- Change is mechanical and localized
+- No design or architectural decisions required
+- No contract changes required
 
-**Qualifies as hotfix if ALL are true:**
-- Change is mechanical, localized, and clearly defined
-- No contract or design changes required
-- For each contract whose domain overlaps the affected code, state:
-  > **[Contract Name]:** [one sentence why this change does not affect it]
-- All relevant contracts cleared. If any cannot be cleared → STOP.
-  Output: "Contract risk detected. Run `/new-task`." No override allowed.
+### Common examples (non-exhaustive):
+- Typo, formatting, or whitespace fix
+- Simple rename (variable, function, file)
+- Add missing import or dependency
+- Trivial bug fix (null check, off-by-one)
+- Pure UI changes
 
-If no contracts are relevant → state: "No relevant contracts identified."
+### If criteria is not met:
 
-**If scope or intent is unclear:**
-Output: "This looks like a full task. Run `/new-task`."
-STOP.
+- Output:
+  "The fix is not simple, it is better to run it as full task using new-task prompt."
+  if you choose to continue, run "continue"
+  wait for user input, if continue run below
 
 ---
 

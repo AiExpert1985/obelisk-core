@@ -16,7 +16,7 @@ description: Creates a new Obelisk task
 
 - `/obelisk/contracts/contracts-summary.md`
 - `/obelisk/design/design-summary.md`
-- `/obelisk/guidelines/ai-engineering.md`
+- `/obelisk-core/guidelines/ai-engineering.md`
 
 **If any file is missing:** STOP and output: Use `init-project` to initialize the project.
 

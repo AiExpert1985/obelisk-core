@@ -4,7 +4,7 @@ description: Auto-execute task until the end
 ## Required Files
 
 - `/obelisk/workspace/task.md`
-- `/obelisk/guidelines/ai-engineering.md`
+- `/obelisk-core/guidelines/ai-engineering.md`
 
 If any are missing → STOP and report path.
 
@@ -184,7 +184,7 @@ Copy `task.md` to `/obelisk/history/completed/YYYYMMDD-HHMM-[task-name].md` Clea
 
 If `contracts-summary.md → ## Unprocessed` contains ≥ 10 entries or `design-summary.md → ## Unprocessed` contains ≥ 10 entries
 
-→ Run `/obelisk/prompts/maintain-project.md`
+→ Run `/obelisk-core/prompts/maintain-project.md`
 
 ---
 
