@@ -203,7 +203,7 @@ Delete all files in `/obelisk/workspace/` before proceeding.
 **Date:** YYYY-MM-DD
 - [decisions]
 
-## Discovery Summary
+## Discovery-Summary
 **Intent:** [1 short paragraph]
 **Key Decisions:** [bullets]
 **Rejected / Deferred:** [bullets or omit]
@@ -235,7 +235,7 @@ All sections must be concise and focused. Omit any section that has no content.
 - No implementation details, cosmetic choices, or speculative decisions
 - Be concise (under 100 words)
 
-#### Discovery Summary
+#### Discovery-Summary
 - Informational only — never authoritative
 - Be concise (under 120 words total)
 - Omit Rejected/Deferred if none

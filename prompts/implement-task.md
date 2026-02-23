@@ -4,12 +4,9 @@ description: Auto-execute task until the end
 ## Required Files
 
 - `/obelisk/workspace/task.md`
-- `/obelisk/workspace/plan.md`
-- `/obelisk-core/guidelines/ai-engineering.md`
+- `/obelisk/guidelines/ai-engineering.md`
 
-**If any file is missing:**
-- STOP and report missing file
-- OUTPUT: Use `@init-project` to initialize the project.
+If any are missing → STOP and report path.
 
 ---
 
@@ -19,18 +16,16 @@ description: Auto-execute task until the end
 
 MUST:
 
-- Implement strictly according to `plan.md`.
-- Modify ONLY files listed in the plan.
-- Preserve all contracts listed in the plan.
-- Log any divergence in implementation-notes.md.
+- Implement strictly according to `task.md` (Goal, Scope, Execution Strategy)
+- Respect all Constraints listed in task.md (contracts, design principles, technical limits)
+- Stay within the Affected Area defined in task.md
+- Log any divergence
 
 MUST NOT:
 
-- Reinterpret, redesign, or expand the plan.
-- Silently correct or redesign plan errors.
-- Modify contracts.
-- Modify files not listed in the plan.
-- Ask questions (use STOP instead).
+- Reinterpret, redesign, or expand scope
+- Silently correct or redesign errors in task.md
+- Ask questions (use STOP instead)
 
 ---
 
@@ -38,11 +33,11 @@ MUST NOT:
 
 STOP immediately if:
 
-- A plan requirement cannot be achieved without new decisions.
-- A change would violate a contract listed in the plan.
-- Completing a step requires architectural or scope decisions not in the plan.
-- Continuing would risk irreversible or unsafe changes.
-- You are uncertain whether a change is mechanical.
+- A requirement cannot be achieved without new decisions
+- A change would violate a constraint listed in task.md
+- Completing a step requires architectural or scope decisions not in task.md
+- Continuing would risk irreversible or unsafe changes
+- You are uncertain whether a change is mechanical
 
 STOP is terminal. No further execution is allowed.
 
@@ -58,162 +53,138 @@ Proceed only if intent and observable behavior remain unchanged:
 - Syntax or API alignment to actual code state
 - Defensive checks consistent with existing patterns
 
-Log any such divergence.
+Log any such adaptation.
 
 ---
 
 ### Implementation Notes
 
-Create `/obelisk/workspace/implementation-notes.md`:
+Append to `/obelisk/workspace/task.md` under `## Implementation Notes`:
 
 ```markdown
-# Implementation Notes: [Task Name]
+## Implementation Notes
 
-## Execution Summary
-[What was done. If exact match, state so.]
+### Execution Summary
+[What was done. If exact match to plan, state so.]
 
-## Divergences
-- Plan specified: [X]
+### Divergences
+- Specified: [X]
 - Actual: [Y]
 - Reason: [mechanically necessary because...]
 
-(If none: "Plan implemented as specified. No divergences.")
+(If none: "Implemented as specified. No divergences.")
 ```
-
 
 ---
 
 ## Review Phase
 
-For every ✔, provide evidence: file path + function/class, code snippet, 
-or precise observed logic. Vague statements are not evidence.
+For every ✔ provide evidence: file path + function/class, code snippet, or precise observed logic. Vague statements are not evidence.
 
- **Write to `/obelisk/workspace/review-notes.md`:**
+Append to `/obelisk/workspace/task.md` under `## Review-notes`:
 
-```
-# Review: [Task Name]
+```markdown
+## Review
 
 **Status:** APPROVED | REJECTED
 
 1. Goal Achieved: ✔ | ✗ — [evidence]
-2. Contracts Preserved: ✔ | ✗ — [evidence]
+2. Constraints Preserved: ✔ | ✗ — [evidence]
 3. Scope Preserved: ✔ | ✗ — [evidence]
 
-**Files Verified:** [list]
-
-**Notes:** [optional — mechanical divergences or observations only]
+**Files Modified:** [list]
+**Notes:** [mechanical divergences or observations only]
 ```
 
 ---
-
 
 ### Status Gate
 
-**If REJECTED**
+**If REJECTED:**
 
 1. Append to `/obelisk/history/history-log.md`:
 
-``` markdown
+```markdown
 ## YYYYMMDD-HHMM | [Task Name] | REJECTED
 
----
+[Discovery Summary from task.md — copied exactly]
 
+---
 ```
 
-2. Archive workspace to  
-   `/obelisk/archive/rejected/YYYYMMDD-HHMM-[task-name]/`
-   
+2. Copy `task.md` to `/obelisk/history/rejected/YYYYMMDD-HHMM-[task-name].md`
 3. Clear `/obelisk/workspace/`
 
-**Output:**
+Output:
 
-``` markdown
+```
 ⚠️ TASK CLOSED — REJECTED
-Archived: /obelisk/archive/rejected/YYYYMMDD-HHMM-[task-name]/
-
+Archived: /obelisk/history/rejected/YYYYMMDD-HHMM-[task-name].md
 ```
 
 STOP.
 
 ---
 
-**If APPROVED**
+**If APPROVED:**
 
-#### **1 — Write History**
+#### 1 — Write History
 
 Append to `/obelisk/history/history-log.md`:
 
-``` markdown
+```markdown
 ## YYYYMMDD-HHMM | [Task Name] | APPROVED
 
----
+[Discovery-Summary from task.md — copied exactly]
 
+---
 ```
 
 ---
 
-#### **2 — Apply Contract Changes**
+#### 2 — Apply Contract Changes
 
 If `task.md` has `## Contract-Changes` section:
 
-Append its content exactly as written to  
-`/obelisk/contracts/contracts-summary.md → ## Unprocessed`
+Append to `/obelisk/contracts/contracts-summary.md` → `## Unprocessed`:
 
-**Format:**
-
-``` markdown
+```markdown
 ## YYYYMMDD-HHMM | [Task Name]
 
-[Contract change content]
+[Contract-Changes content — copied exactly, do not modify]
 
 ---
 ```
 
-**Rules:**
-- Do NOT modify wording
-- Do NOT reinterpret
-- Preserve exact contract text
-
-
 ---
 
-#### **3 — Apply Design Changes**
+#### 3 — Apply Design Changes
 
 If `task.md` has `## Design-Changes` section:
 
-Append its content (excluding Summary and Deferred) to:
+Append to `/obelisk/design/design-summary.md` → `## Unprocessed`:
 
-`/obelisk/design/design-summary.md` → `## Unprocessed`
-
-**Format:**
-
-``` markdown
+```markdown
 ## YYYYMMDD-HHMM | [Task Name]
 
-[Architecture / Design and Business Logic sections exactly as written]
+[Design-Changes content — copied exactly, do not modify]
 
 ---
 ```
 
-
 ---
 
-#### **4 — Archive Workspace**
+#### 4 — Archive Task
 
-Archive all files to:
-`/obelisk/archive/completed/YYYYMMDD-HHMM-[task-name]/`
-
-Clear `/obelisk/workspace/`
+Copy `task.md` to `/obelisk/history/completed/YYYYMMDD-HHMM-[task-name].md` Clear `/obelisk/workspace/`
 
 ---
 
 ## Auto-Maintain
 
-**If design-summary `## Unprocessed` contains ≥ 10 entries** 
-or 
-**contracts-summary `## Unprocessed` contains ≥ 10 entries**
+If `contracts-summary.md → ## Unprocessed` contains ≥ 10 entries or `design-summary.md → ## Unprocessed` contains ≥ 10 entries
 
-**→ Run `/obelisk-core/prompts/maintain-project.md`** 
+→ Run `/obelisk/prompts/maintain-project.md`
 
 ---
 
@@ -221,8 +192,7 @@ or
 
 ```
 ✅ TASK CLOSED — APPROVED
-Archived: /obelisk/archive/completed/YYYYMMDD-HHMM-task-name/
+Archived: /obelisk/history/completed/YYYYMMDD-HHMM-[task-name].md
 ```
-
 
 STOP.
