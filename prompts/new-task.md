@@ -1,33 +1,13 @@
 ---
 description: Creates a new Obelisk task
 ---
-
 ## Entry Point Detection
 
-**Check if task description was provided:**
+**If user provided description:**
 
-**IF user provided description:**
+- Extract task_description from input
 
-```
-/new-task Add image picker to main screen
-```
-
-- Extract task_description = "Add image picker to main screen"
-
-
-**IF no description:**
-
-```
-/new-task
-```
-
-Output exactly:
-
-"Describe your task"
-
-STOP. Wait for response.
-
- Set task_description = [response]
+**If no description:** Output exactly: "Describe your task" STOP. Wait for response. Set task_description = [response]
 
 
 ---
@@ -38,46 +18,27 @@ STOP. Wait for response.
 - `/obelisk/design/design-summary.md`
 - `/obelisk/guidelines/ai-engineering.md`
 
-**If any file is missing:**
-- STOP and report missing file
-- OUTPUT: Use `@init-project` to initialize the project.
-
-
----
-
-
-## EXECUTION GUARD (CRITICAL)
-
-Task Discovery defines intent.
-
-You MUST NOT implement, or modify code during this phase.  
-If execution is triggered at any point → **STOP immediately**.
+**If any file is missing:** STOP and output: Use `init-project` to initialize the project.
 
 ---
 
 ## Code Reconnaissance (Optional, Bounded)
 
-You MAY read code during Task Discovery, but ONLY to answer:
-- **"Where does this change live?"**
-- **"Which modules / files are likely affected?"**
-- **"Do existing contracts already cover this area?"**
-
-If you find yourself reasoning about *how* to implement → STOP.
-
-**After reconnaissance, output only:** > "Related code reviewed."
+- Read only what is necessary to understand scope and locate affected files.
+- Note observations as you go — reuse them during planning without re-reading.
+- Do NOT reason about how to implement.
 
 ---
 
 ## Contract vs. Design Boundary
 
-**Contract:** A business invariant that must remain true regardless of implementation.
-If violated, business correctness or historical data integrity breaks.
+- **Contract:** A business invariant that must remain true regardless of implementation. If violated, business correctness or historical data integrity breaks.
 
-**Design:** How the system is built (tech stack, schema, architecture, modules, UI, patterns).
+- **Design:** How the system is built (tech stack, schema, architecture, modules, UI, patterns).
 
-**Boundary test:**
-- Must stay true even if the system is rebuilt differently → Contract
-- Describes structure, schema, tech, or implementation detail → Design
+- **Boundary test:**
+  - Must stay true even if the system is rebuilt differently → Contract
+  - Describes structure, schema, tech, or implementation detail → Design
 
 ---
 
@@ -85,42 +46,38 @@ If violated, business correctness or historical data integrity breaks.
 
 ### Question Rules
 
-These rules apply to all discovery questions in all sets.
-
 **Ask ONLY questions affecting:**
+
 - Task definition or intent
 - Scope boundaries
 - Feasibility or approach
 - Required constraints
 
 **Do NOT ask about:**
-- Information already explicitly stated in contracts-summary, design-summary, the task description, or prior answers
-- Implementation details (for planning phase)
 
-**Keep questions high-impact. Skip obvious or low-value questions.**
+- Information already stated in contracts-summary, design-summary, task description, or prior answers
+
+Keep questions high-impact. Skip obvious or low-value questions.
 
 ---
-## Providing Recommendations
 
-Provide a brief recommendation only when one option is clearly preferable based on existing constraints (code, contracts, or established best practices).
+### Providing Recommendations
 
-Place the recommendation immediately after the question (never grouped separately).
+
+Provide a brief recommendation ONLY when one option is objectively preferable based on existing contracts, design constraints, or technical realities.
+
+If preference depends on user taste, unclear trade-offs, or speculation → do not recommend.
+
+Place recommendation immediately after the question.
+
 
 **Format:**
 
-``` markdown
+```markdown
 [Question]
 
 Recommendation: [Option] — [brief reason].
-
 ```
-
-Skip recommendation if:
-- No clear objective preference
-- It depends on user preference
-- It requires speculation
-
-If one option is clearly wrong, state the correct choice positively.
 
 ---
 
@@ -142,18 +99,17 @@ Always ask at least one clarification question.
 
 → Otherwise: Continue to Refinement Questions
 
-
 ---
 
 ### Refinement Questions (If Needed)
 
-Resolve remaining issues in organized groups. Each group may be skipped if no issues were detected.
+Resolve remaining issues in organized groups. Skip each group if no issues detected.
 
 ---
 
 **📌 Group 1: Clarification** (if gaps remain)
 
-- Resolve ambiguities from Set 1
+- Resolve ambiguities from clarification Questions
 - Important edge cases needing user input
 - Approach selection when multiple valid options
 - Flag if task should be split
@@ -164,53 +120,51 @@ Resolve remaining issues in organized groups. Each group may be skipped if no is
 
 **📋 Group 2: Contracts**
 
-Check task against all loaded contracts with full context from Set 1.
+Check task against all loaded contracts.
 
 **If conflict found:**
+
 ```
-⚠️ **Contract Conflict**
+⚠️ Contract Conflict
 
 Task: [specific step that conflicts]
 Conflicts with: "[exact contract text]"
 
-**Options:**
-1. **Update task** — [what changes]
-2. **Update contract** — [what exception needed]
+Options:
+1. Update task — [what changes]
+2. Update contract — [what exception needed]
 
-**Recommendation:** [Option] because [reason]
+Recommendation: [Option] because [reason]
 
-Choose: [1/2]
+Choose: 1/2
 ```
 
 **If new contract needed** (ONLY for business-critical rules):
+
 ```
-📋 **Contract Addition**
+📋 Contract Addition
 
 Task introduces: [critical functionality]
+Rule: [why contract-worthy]
 
-— [Rule — why contract-worthy]
-
-Add? [yes/no]
+Add? yes/no
 ```
 
 *Skip if no contract issues.*
 
-
 ---
 
-## TASK FREEZE
+# TASK FREEZE
 
-
-### Clean Workspace
+## Clean Workspace
 
 Delete all files in `/obelisk/workspace/` before proceeding.
 
 ---
-### task.md`
 
-Write to `/obelisk/workspace/task.md`:
+## Create `/obelisk/workspace/task.md`
 
-``` markdown
+```markdown
 
 # Task: [One-line descriptive name]
 
@@ -218,148 +172,91 @@ Write to `/obelisk/workspace/task.md`:
 [What must be achieved and why]
 
 ## Scope
-✓ Included: [clear list from discovery]
-✗ Excluded: [clear list from discovery]
+✓ Included: [list]
+✗ Excluded: [list]
 
 ## Constraints
-- [Contracts to preserve]
-- [Technical/business limits]
+- **Contract: [Name]** — [specific applicability]
+- **Design: [Principle]** — [specific applicability]
+- [Technical/business limit]
 
-## Open Questions (if any)
-- [Unresolved ambiguities]
+## Execution Strategy
+[3–5 concise sentences]
 
-```
+## Affected Area
+- **Module / Feature:** [name]
+- **Entry points:** [e.g., "UserProfile screen", "billing service"]
+- **Notes:** [contract-sensitive spots or "None"]
+
+## Open Questions
+- [or "None"]
 
 ---
 
-### Contract Changes (conditional)
-
-**Only create this section if there are contract changes and were approved by user**
-Write below section at the bottom of `task.md` under `## Contract-Changes` section
-
-**Format**:
-
-``` markdown
-
-## [TASK_NAME] | YYYY-MM-DD
-
+## Contract-Changes
+**Date:** YYYY-MM-DD
 **Action:** update | create
 **Change:**
 - [exact text]
 
-**Action:** create | update
-**Change or Move:**
-- [exact text]
+## Design-Changes
+**Date:** YYYY-MM-DD
+- [decisions]
 
-```
-
-- A rule is contract-worthy only if violating it risks system integrity, business correctness, or irreversible damage.
-- **Only include contract changes explicitly approved by the user during discovery**
-
----
-
-## Design Changes
-
-Write below section at the bottom of `task.md` under `## Design-Changes` section
-
-**Format**:
-
-```markdown
-## [TASK_NAME] | YYYY-MM-DD
-
-**Summary:**
-- [one-line task intent]
-
-**Architecture / Design (if applicable):**
-- [Long-lived structural decisions]
-- [Module boundaries or UX philosophy changes]
-
-**Business Logic (if applicable):**
-- [Core behavior rules affecting system]
-
-**Deferred:**
-- [Unresolved items or "None"]
+## Discovery Summary
+**Intent:** [1 short paragraph]
+**Key Decisions:** [bullets]
+**Rejected / Deferred:** [bullets or omit]
 
 ```
 
 
-**Rules:**
-- Include ONLY sections with content (skip empty sections).
-- Focus on long-lived, system-level decisions.
-- Exclude implementation details and cosmetic choices.
-- Be concise (under 150 words).
+### Rules
+All sections must be concise and focused. Omit any section that has no content.
+
+#### Constraints
+- Prefix each entry with Contract:, Design:, or leave unprefixed for technical/business limits
+- Reference contracts and design by name plus specific applicability only — do not copy full text
+
+#### Affected Area
+- High-level only — modules, features, entry points
+- Do not list exact file paths
+- Note contract-sensitive spots if any
+
+#### Contract-Changes
+- Covers both new contracts and updates to existing ones
+- Only include changes explicitly approved by the user during discovery
+- A rule is contract-worthy only if violating it risks system integrity, business correctness, or irreversible damage
+- Copy approved wording exactly — do not paraphrase
+
+#### Design-Changes
+- Covers both new design decisions and updates to existing ones
+- Long-lived system-level decisions only
+- No implementation details, cosmetic choices, or speculative decisions
+- Be concise (under 100 words)
+
+#### Discovery Summary
+- Informational only — never authoritative
+- Be concise (under 120 words total)
+- Omit Rejected/Deferred if none
 
 ---
 
-# Implementation Plan
-
-Create `/obelisk/workspace/plan.md`:
-
-```markdown
-# Plan: [Task Name]
-
-## Goal
-[One sentence from task.md]
-
-## Scope Boundaries
-✓ In scope: [clear list]
-✗ Out of scope: [clear list]
-
----
-
-## Relevant Contracts
-
-List ONLY contracts that directly constrain this task.
-Do not copy full contract text.
-
-- **[Contract Name]** — [Specific constraint relevant to this task]
-- **[Contract Name]** — [Specific constraint]
-
----
-
-## Relevant Design Constraints
-
-List ONLY design rules that limit implementation choices.
-
-- **[Constraint]** — [How it applies here]
-- **[Constraint]** — [How it applies here]
-
----
-
-## Execution Strategy
-[3–5 concise sentences describing the approach]
-
----
-
-## Affected Files
-
-- `/path/file.ext` — [Change summary + contract touch if any]
-- `/path/new-file.ext` — [Purpose + contract touch if any]
-
-(If no contract impact: state “No contract impact”)
-
-```
-
-
-All sections required. Use “None” if applicable.
-
----
-
-## TERMINAL STATE
+## OUTPUT
 
 Output EXACTLY this block. No additions.
 
+```
+Obelisk: Task Ready
 
-**Obelisk: Task Ready**
+Task frozen: /obelisk/workspace/task.md
 
-**Task frozen:** `/obelisk/workspace/task.md`
-
-Review `task.md` and `plan.md`.  
-If you have corrections, describe them now.  
+Review task.md.
+If you have corrections, describe them now.
 Otherwise:
 
-to implement the task, call the `implement-task` prompt
-
+To implement the task, call the implement-task prompt.
+```
 
 ---
 
@@ -380,4 +277,4 @@ If the user provides corrections:
    - Output: `Correction changes scope or constraints. Restarting discovery.`
    - Restart from ## Refinement Questions using existing task description and previous questions & answers as context
 
-If no corrections → TERMINAL STATE
+If no corrections → wait for `/implement-task`
