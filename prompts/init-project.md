@@ -39,12 +39,12 @@ Understand the project and identify contract and design candidates.
 
 ## Contract vs. Design Boundary
 
-**Contract:** A business invariant that must remain true regardless of implementation.
-If violated, business correctness or historical data integrity breaks.
+**Contract:** A business invariant that must remain true regardless of implementation. If violated, business correctness or historical data integrity breaks.
 
 **Design:** How the system is built (tech stack, schema, architecture, modules, UI, patterns).
 
 **Boundary test:**
+
 - Must stay true even if the system is rebuilt differently → Contract
 - Describes structure, schema, tech, or implementation detail → Design
 
@@ -83,12 +83,9 @@ If violated, business correctness or historical data integrity breaks.
 
 Output exactly:
 
-
 PHASE 1: DISCOVERY
 
-Describe your system to help initialize contracts.
-Type `skip` to use minimal defaults (not recommended).
-
+Describe your system to help initialize contracts. Type `skip` to use minimal defaults (not recommended).
 
 **STOP. Wait for user response.**
 
@@ -102,6 +99,7 @@ Type `skip` to use minimal defaults (not recommended).
 #### Step 1 — Core Questions
 
 Based on the project description provided by the user, ask questions that materially affect:
+
 - System identity and boundaries
 - Contracts and invariants
 - Global constraints or risks
@@ -219,7 +217,7 @@ Keep structured sections empty with placeholder text.
 
 ### **`/obelisk/contracts/contracts-summary.md`:**
 
-``` markdown
+```markdown
 # Contracts Summary
 
 Generated: YYYY-MM-DD
@@ -251,8 +249,7 @@ _(empty — populated after first maintenance)_
 
 ### **`/obelisk/design/design-summary.md`:**
 
-``` markdown
-
+```markdown
 # Design Summary
 
 Generated: YYYY-MM-DD
@@ -289,14 +286,14 @@ _(empty — populated after maintenance)_
 
 ---
 
-### 3. Create `/obelisk/history/history-log.md`
+### 3. Create History Log with INIT Entry
 
+Create `/obelisk/history/history-log.md` with the following content:
 
-**Format**
+```markdown
+# History Log
 
-```
-
-## YYYYMMDD-HHMM | Project Initialization | APPROVED
+## YYYYMMDD-HHMM | Project Initialization | INIT
 
 ## Vision
 [What and why]
@@ -323,13 +320,15 @@ _(empty — populated after maintenance)_
 [Anything else discussed during init]
 
 ---
-
-
 ```
 
+Rules:
+
+- Use ONLY information explicitly established during discovery
+- If discovery was skipped, populate only what was explicitly stated
+- Do NOT infer or expand beyond what was discussed
 
 ---
-
 
 ## Output
 
