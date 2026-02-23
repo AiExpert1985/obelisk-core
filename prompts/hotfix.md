@@ -47,8 +47,6 @@ Append to `/obelisk/history/history-log.md` under `## Unprocessed`:
 ```markdown
 ## YYYYMMDD-HHMM | [Hotfix Name] | HOTFIX
 
-Contracts scanned: [list]
-
 ---
 ```
 
