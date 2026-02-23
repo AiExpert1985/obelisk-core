@@ -1,211 +1,38 @@
 # Obelisk Framework
 
-_A contract-driven, phase-separated collaboration protocol for stateless AI work on long-lived systems._
+_A contract-driven collaboration protocol for long-lived AI-assisted software systems._
+
+Obelisk prevents silent drift by externalizing truth, intent, and history into structured files — not chat. It optimizes for long-term correctness, not short-term speed.
 
 ---
 
-## Why Obelisk Exists
+## Core Idea
 
-> **AI does not fail because it is weak — it fails because long-term use is unmanaged.**
+AI fails over time not because it is weak, but because context is lost, decisions are forgotten, scope silently expands, and stable code is touched accidentally.
 
-As projects grow:
+Obelisk separates four layers:
 
-- Conversations accumulate stale assumptions
-- Sessions reset and models switch
-- Critical knowledge is lost
-- AI-generated changes silently break working systems
-- What changed — and why — becomes unclear
+- **Contracts** — invariants that must always hold
+- **Design** — long-lived architectural decisions
+- **Tasks** — frozen intent and execution boundaries
+- **History** — chronological memory of decisions and rationale
 
-Over time, AI-assisted development becomes unpredictable and difficult to trust.
-
-Obelisk externalizes truth, design, intent, and history into explicit files so correctness does not depend on chat memory.
-
----
-
-## What Obelisk Is
-
-Obelisk is a structured collaboration framework that makes AI-assisted development:
-
-- **Safe**
-- **Repeatable**
-- **Recoverable**
-
-**Core mechanism:**  
-External files replace chat as the source of truth.
-
-**Key properties:**
-- Model-independent (switch AI providers freely)
-- Stateless (resume after months)
-- Validation-enforced (prevents silent corruption)
-
-It does not prevent failure. It prevents **silent damage**.
-
----
-
-## How It Works
-
-Obelisk separates five layers:
-
-> **Contracts** define invariants  
-> **Design** defines architecture  
-> **Tasks** freeze intent  
-> **Plans** constrain execution  
-> **History** records events  
-
-Higher layers constrain lower layers.  
-Lower layers may not redefine higher ones.
+Contracts and Design are authoritative. History is informational. Tasks are temporary execution specifications.
 
 ---
 
 ## Designed For
 
-Long-lived systems where:
+Long-lived systems where correctness matters more than velocity, breaking changes damage trust, and AI is used continuously.
 
-- Correctness matters more than raw velocity
-- Breaking changes damage trust or operations
-- AI is used continuously in production
-
-It intentionally trades early friction for long-term stability.
-
-**Not Designed For:**
-
-- Throwaway prototypes
-- Maximum-speed experimentation
-- Replacing manual testing
-- Guaranteeing zero bugs
-
----
-
-## Design Philosophy
-
-### Core Failure Modes
-
-**Context Window Trap**
-- Knowledge trapped in chat
-- Context exhaustion forces resets
-- Decisions lost; only code remains
-
-**Rushed Execution**
-- Implementation before understanding
-- Alternatives unexplored
-- Architectural impact ignored
-
-**Silent Corruption**
-- Gradual drift from original intent
-- Small changes accumulate unnoticed
-- System runs, clarity erodes
-
-### Why Obelisk Works
-
-- Stateless collaboration via files
-- Mandatory discovery before execution
-- Validation against frozen intent
-- Architecture preserved independently of tasks
-
----
-
-## Commands
-
-| Command                    | Purpose                              |
-|----------------------------|--------------------------------------|
-| `/init-project`            | Initialize project structure         |
-| `/new-task [description]`  | Create new task and execution plan   |
-| `/implement-task`          | Implement, review, archive           |
-| `/ask-project`             | Query project knowledge              |
-| `/suggest-task`            | Get next task suggestions            |
-| `/hotfix [description]`    | Apply small mechanical fix directly  |
-| `/maintain-project`        | Compact and regenerate summaries     |
-| `/help`                    | Show available commands              |
-
----
-
-## Quick Start
-
-**For projects using Obelisk in AI coding tools (Windsurf, Cursor, etc.):**
-
-1. Initialize project:
-```
-/init-project
-```
-
-2. Create a task:
-```
-/new-task Add user authentication
-```
-
-3. Execute:
-```
-/implement-task
-```
-
-4. Ask questions anytime:
-```
-/ask-project What contracts exist?
-```
-
----
-
-## Core Workflow
-
-### Project Initialization (Once)
-
-Discovery defines:
-
-- System identity
-- Core invariants
-- Long-lived architectural intent
-- Product description, screens, flows, and UX philosophy
-
-Outcome: durable foundation independent of chat sessions.
-
----
-
-### Task Cycle (Repeats)
-```
-create new (task + plan) → implement → review → archive
-```
-
-Execution resumes from current phase if interrupted.
-
----
-
-### Hotfix (Shortcut)
-
-Used only when:
-
-- Change is small and obvious
-- No invariants are affected
-- Fully reversible
-- Diff explains itself
-
-Hotfixes bypass planning but are always recorded in history.
-If the fix turns out to be non-trivial, the model will recommend switching to `/new-task`.
-
----
-
-### Task Execution
-
-#### `/new-task`
-Discover intent, freeze task, and create execution plan.  
-Prevents guessing, scope drift, and accidental architecture.
-
-#### `/implement-task`
-Implement → review → archive.
-
-- Implementation follows the frozen plan
-- Review validates against contracts and intent
-- Archive preserves traceability
-
-The system evolves with explicit authority and no silent drift.
+**Not designed for:** throwaway prototypes, maximum-speed experimentation, replacing manual testing.
 
 ---
 
 ## Repository Structure
 
-Obelisk separates framework prompts from project state into two distinct folders:
 ```
-/obelisk-core/
-├── README.md
+/obelisk-core/                  # Framework prompts (shared, git submodule)
 ├── prompts/
 │   ├── init-project.md
 │   ├── new-task.md
@@ -218,31 +45,29 @@ Obelisk separates framework prompts from project state into two distinct folders
 └── guidelines/
     └── ai-engineering.md
 
-/obelisk/               # Project state (local, per-project)
+/obelisk/                       # Project state (local, per-project)
 ├── contracts/
 │   ├── contracts-log.md        # Canonical invariants (append-only)
-│   └── contracts-summary.md    # Active contract projection
+│   └── contracts-summary.md    # Active projection (regenerated)
 ├── design/
-│   ├── design-log.md           # Canonical architectural decisions
-│   └── design-summary.md       # Active architectural projection
-├── history/
-│   └── history-log.md          # Chronological task timeline
-├── project/
-│   └── project-initial-description.md  # Frozen init snapshot
-├── workspace/                  # Active task state
-└── archive/
-    ├── completed/
-    └── rejected/
+│   ├── design-log.md           # Canonical design decisions (append-only)
+│   └── design-summary.md       # Active projection (regenerated)
+├── workspace/
+│   └── task.md                 # Active task (cleared after archive)
+└── history/
+    ├── history-log.md          # Complete project memory
+    ├── completed/              # One file per completed task
+    └── rejected/               # One file per rejected task
 ```
 
-**obelisk-core** is a shared git submodule. Update prompts in `obelisk-core`, then pull and commit the updated submodule in each project.
-**obelisk** is local per project. It holds all state, history, and knowledge specific to that project.
+No archive folder. Each task becomes one self-contained file in history.
 
 ---
 
-## Authority & Knowledge Model
+## Authority Model
 
-**Authority Hierarchy (Highest → Lowest):**
+Highest → Lowest:
+
 1. Contracts Log
 2. Design Log
 3. Active Task
@@ -251,22 +76,88 @@ Obelisk separates framework prompts from project state into two distinct folders
 6. Derived Summaries
 7. Chat History
 
-**Canonical (Authoritative):**
-- Contracts Log — append-only invariants
-- Design Log — append-only architectural decisions
-- History Log — chronological task record
-
-**Derived (Disposable):**
-- Contracts Summary — active projection (regenerated)
-- Design Summary — active projection (regenerated)
-
-**Reference (Static):**
-- Project Initial Description — frozen init snapshot, never maintained
-
-Summaries never override logs.  
-Project initial description is never authoritative — for orientation and idea surfacing only.
+Summaries never override logs. History never overrides contracts or design.
 
 ---
 
-Obelisk is a collaboration protocol.  
-This repository is its reference implementation.
+## Task Lifecycle
+
+### 1 — `/new-task`
+
+Clarify intent, validate against contracts, freeze a single `task.md` containing:
+
+- Goal, Scope, Constraints, Execution Strategy, Affected Area
+- Archive Data: Contract-Changes, Design-Changes, Discovery Summary
+
+No separate plan file.
+
+### 2 — `/implement-task`
+
+- Implement strictly according to task.md
+- STOP if scope or constraints would be violated
+- Append Implementation Notes and Review into task.md
+- Extract and apply Contract-Changes and Design-Changes verbatim
+- Append Discovery Summary to history-log.md
+- Archive task to `/history/completed/` or `/history/rejected/`
+
+No reinterpretation. No silent redesign.
+
+---
+
+## Constraints Model
+
+Each task defines constraints that implement-task enforces strictly:
+
+```markdown
+## Constraints
+- Contract: [Name] — [specific applicability]
+- Design: [Principle] — [specific applicability]
+- [Technical or business limits]
+```
+
+---
+
+## History Model
+
+`history-log.md` records every task outcome with its discovery summary:
+
+```markdown
+## YYYYMMDD-HHMM | Task Name | APPROVED / REJECTED
+
+[Discovery Summary]
+
+---
+```
+
+Each archived task file contains the full frozen task, implementation notes, review, and archive data. History is project memory — never authority.
+
+---
+
+## Hotfix
+
+For small, mechanical, fully reversible fixes only. Requires mandatory contract scan before execution — if contract risk is detected, escalates to `/new-task`. Always recorded in history.
+
+---
+
+## Auto-Maintain
+
+When contracts-summary or design-summary accumulate ≥ 10 unprocessed entries, run `/maintain-project` to compact logs and regenerate summaries.
+
+---
+
+## Commands
+
+|Command|Purpose|
+|---|---|
+|`/init-project`|Initialize project structure|
+|`/new-task [description]`|Discover intent, freeze task|
+|`/implement-task`|Implement, review, archive|
+|`/ask-project`|Query project knowledge|
+|`/suggest-task`|Suggest next high-impact tasks|
+|`/hotfix [description]`|Apply small mechanical fix|
+|`/maintain-project`|Compact and regenerate summaries|
+|`/help`|Show available commands|
+
+---
+
+Obelisk is not a productivity booster. It is a long-term stability system for AI-driven development.
