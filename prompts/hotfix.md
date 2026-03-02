@@ -34,7 +34,7 @@ description: Apply small mechanical fix directly
 
 ## Write History
 
-Append to `/obelisk/history/history-log.md` under `## Unprocessed`:
+Append to `/obelisk/history/history-log.md`:
 ```markdown
 ## YYYYMMDD-HHMM | [Hotfix Name] | HOTFIX
 

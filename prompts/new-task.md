@@ -1,293 +1,98 @@
 ---
-description: Creates a new Obelisk task
+description: Creates and implements an Obelisk task
 ---
 
-## Execution Protocol
+## Context
 
-This prompt executes in strictly ordered phases:
-1. Clarification Questions
-2. Refinement Questions (skip if not needed)
-3. Task Freeze
-
-One phase per response.
-
-End Clarification Questions with: `STATUS: AWAITING_CLARIFICATION`
-End Refinement Questions with: `STATUS: AWAITING_REFINEMENT`
-End Task Freeze with: `STATUS: TASK_READY`
-
-Do not generate task.md until Task Freeze phase.
-
----
-
-## Entry Point Detection
-
-**If user provided description:** - Extract task_description from input **If no description:** Output exactly: "Describe your task" STOP. Wait for response. Set task_description = [response]
-
----
-
-## Required Files
-
+Read before starting:
 - `/obelisk/contracts/contracts-summary.md`
 - `/obelisk/design/design-summary.md`
 - `/obelisk-core/guidelines/ai-engineering.md`
 
-**If any file is missing:** STOP and output: Use `init-project` to initialize the project.
-
----
-
-## Code Reconnaissance (Optional, Bounded)
-
-- Read only what is necessary to understand scope and locate affected files.
-- Note observations as you go — reuse them during planning without re-reading.
-- Do NOT reason about how to implement.
+If any missing → STOP. Output: Use `/init-project` to initialize the project.
 
 ---
 
 ## Contract vs. Design Boundary
 
-- **Contract:** A business invariant that must remain true regardless of implementation. If violated, business correctness or historical data integrity breaks.
-
-- **Design:** How the system is built (tech stack, schema, architecture, modules, UI, patterns).
-
-- **Boundary test:**
-  - Must stay true even if the system is rebuilt differently → Contract
-  - Describes structure, schema, tech, or implementation detail → Design
+**Contract:** Business invariant that must hold regardless of implementation — even after a full rebuild.
+**Design:** How the system is built — tech, schema, architecture, patterns.
 
 ---
 
-## Discovery Questions
+## DISCOVERY
 
-### Question Rules
+Have a natural conversation to fully understand the task.
 
-**Ask ONLY questions affecting:**
+Ask only what matters:
+- Unclear intent, scope, or approach
+- Decisions you cannot make unilaterally
+- Risks or constraints that would change execution
+- Anything that conflicts with existing contracts or design
 
-- Task definition or intent
-- Scope boundaries
-- Feasibility or approach
-- Required constraints
+Do NOT ask about:
+- Anything inferable from context, contracts, or design
+- Implementation details you can decide yourself
+- Low-impact edge cases
 
-**Do NOT ask about:**
-
-- Information already stated in contracts-summary, design-summary, task description, or prior answers
-
-Keep questions high-impact. Skip obvious or low-value questions.
-
----
-
-### Providing Recommendations
-
-
-Provide a brief recommendation ONLY when one option is objectively preferable based on existing contracts, design constraints, or technical realities.
-
-If preference depends on user taste, unclear trade-offs, or speculation → do not recommend.
-
-Place recommendation immediately after the question.
-
-
-**Format:**
+Provide a recommendation whenever the user faces a choice:
 
 ```markdown
-[Question]
-
-Recommendation: [Option] — [brief reason].
+Recommendation: [option] — [brief reason]
 ```
 
----
+If a contract conflict is detected:
 
-### Clarification Questions (MANDATORY)
-
-Always ask at least one clarification question.
-
-**📌 Questions:**
-- What, why, for whom
-- Scope boundaries (what's in/out)
-- Key constraints or dependencies (including required or preferred external libraries, if any)
-
-**After Clarification Questions:**
-> "Answers helps model fully understand current task."
-
-→ If no clarification gaps remain AND no contract require user input:
-   - State: "No further questions are needed."
-   - Proceed to Task Freeze
-
-→ Otherwise: Continue to Refinement Questions
-
----
-
-### Refinement Questions (If Needed)
-
-Resolve remaining issues in organized groups. Skip each group if no issues detected.
-
----
-
-**📌 Group 1: Clarification** (if gaps remain)
-
-- Resolve ambiguities from clarification Questions
-- Important edge cases needing user input
-- Approach selection when multiple valid options
-- Flag if task should be split
-
-*Skip if no clarification needed.*
-
----
-
-**📋 Group 2: Contracts**
-
-Check task against all loaded contracts.
-
-**If conflict found:**
-
-```
+```markdown
 ⚠️ Contract Conflict
-
-Task: [specific step that conflicts]
 Conflicts with: "[exact contract text]"
-
 Options:
-1. Update task — [what changes]
-2. Update contract — [what exception needed]
-
-Recommendation: [Option] because [reason]
-
+1. Adjust task to comply
+2. Update contract — [what exception is needed]
+Recommendation: [option + reason]
 Choose: 1/2
 ```
 
-**If new contract needed** (ONLY for business-critical rules):
+If the task introduces a new business-critical rule:
 
-```
-📋 Contract Addition
-
-Task introduces: [critical functionality]
-Rule: [why contract-worthy]
-
+```markdown
+📋 New Contract
+Rule: [what it is and why it matters]
 Add? yes/no
 ```
 
-*Skip if no contract issues.*
-
----
-
-# TASK FREEZE
-
-## Clean Workspace
-
-Delete all files in `/obelisk/workspace/` before proceeding.
-
----
-
-## Create `/obelisk/workspace/task.md`
+When nothing important remains unclear, present a clear task summary:
 
 ```markdown
+Task Summary
 
-# Task: [One-line descriptive name]
+Goal: [what and why]
+Scope: ✓ [included] / ✗ [excluded]
+Approach: [key design decisions]
+Contracts: [new or changed, or "None"]
+Constraints: [limits implementation must respect]
+Risks: [known risks or "None"]
 
-## Goal
-[What must be achieved and why]
-
-## Scope
-✓ Included: [list]
-✗ Excluded: [list]
-
-## Constraints
-- **Contract: [Name]** — [specific applicability]
-- **Design: [Principle]** — [specific applicability]
-- [Technical/business limit]
-
-## Execution Strategy
-[3–5 concise sentences]
-
-## Affected Area
-- **Module / Feature:** [name]
-- **Entry points:** [e.g., "UserProfile screen", "billing service"]
-- **Notes:** [contract-sensitive spots or "None"]
-
-## Open Questions
-- [or "None"]
-
----
-
-## Contract-Changes
-**Date:** YYYY-MM-DD
-**Action:** update | create
-**Change:**
-- [exact text]
-
-## Design-Changes
-**Date:** YYYY-MM-DD
-- [decisions]
-
-## Discovery-Summary
-**Intent:** [1 short paragraph]
-**Key Decisions:** [bullets]
-**Rejected / Deferred:** [bullets or omit]
-
-```
-
-
-### Rules
-All sections must be concise and focused. Omit any section that has no content.
-
-#### Constraints
-- Prefix each entry with Contract:, Design:, or leave unprefixed for technical/business limits
-- Reference contracts and design by name plus specific applicability only — do not copy full text
-
-#### Affected Area
-- High-level only — modules, features, entry points
-- Do not list exact file paths
-- Note contract-sensitive spots if any
-
-#### Contract-Changes
-- Covers both new contracts and updates to existing ones
-- Only include changes explicitly approved by the user during discovery
-- A rule is contract-worthy only if violating it risks system integrity, business correctness, or irreversible damage
-- Copy approved wording exactly — do not paraphrase
-
-#### Design-Changes
-- Covers both new design decisions and updates to existing ones
-- Long-lived system-level decisions only
-- No implementation details, cosmetic choices, or speculative decisions
-- Be concise (under 100 words)
-
-#### Discovery-Summary
-- Informational only — never authoritative
-- Be concise (under 120 words total)
-- Omit Rejected/Deferred if none
-
----
-
-## OUTPUT
-
-Output EXACTLY this block. No additions.
-
-```
-Obelisk: Task Ready
-
-Task frozen: /obelisk/workspace/task.md
-
-Review task.md.
-If you have corrections, describe them now.
-Otherwise:
-
-To implement the task, call the implement-task prompt.
+Ready to implement. Enter `implement` to proceed.
 ```
 
 ---
 
-## Post-Freeze Corrections
+## IMPLEMENTATION
 
-If the user provides corrections:
+Do not begin implementation until user explicitly enters `implement`.
 
-1. Classify the correction first:
-   - **Mechanical** — wording or clarification only, no change to scope, intent, constraints, or contract impact
-   - **Substantive** — changes scope, goal, constraints, or contract interactions
+Implement the agreed task. During implementation:
+- Follow the agreed task summary
+- Follow `/obelisk-core/guidelines/ai-engineering.md`
+- Respect `/obelisk/contracts/contracts-summary.md` and `/obelisk/design/design-summary.md`
 
-2. If Mechanical:
-   - Update `task.md` and/or `plan.md`
-   - Output: `Task updated.`
-   - Repeat TERMINAL STATE
+For any follow-up request or scope change from the user:
+- Treat it like a mini-discovery: understand the change, check it against contracts and design, surface conflicts if any, confirm understanding before proceeding
+- Do not implement changes blindly
 
-3. If Substantive:
-   - Output: `Correction changes scope or constraints. Restarting discovery.`
-   - Restart from ## Refinement Questions using existing task description and previous questions & answers as context
+When done, output:
 
-If no corrections → wait for `/implement-task`
+```markdown
+Implementation complete. Enter `@archive-task` to archive.
+```
