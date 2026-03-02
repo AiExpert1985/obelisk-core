@@ -13,13 +13,6 @@ If any missing → STOP. Output: Use `/init-project` to initialize the project.
 
 ---
 
-## Contract vs. Design Boundary
-
-**Contract:** Business invariant that must hold regardless of implementation — even after a full rebuild.
-**Design:** How the system is built — tech, schema, architecture, patterns.
-
----
-
 ## DISCOVERY — Mandatory
 
 You MUST surface your assumptions and ask clarifying questions 
@@ -83,11 +76,19 @@ Risks: [known risks or "None"]
 Ready to implement. Enter `implement` to proceed.
 ```
 
+After presenting the task summary — STOP.
+Do not proceed. Do not write code. Do not explain next steps.
+
+Wait for the user to either:
+- Correct or update the summary
+- Enter `implement` to proceed
+
+If the user provides corrections, update the summary and STOP again.
+Only proceed when `implement` is received.
+
 ---
 
 ## IMPLEMENTATION
-
-Do not begin implementation until user explicitly enters `implement`.
 
 Implement the agreed task. During implementation:
 - Follow the agreed task summary

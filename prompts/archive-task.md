@@ -13,6 +13,24 @@ If no implementation is found → STOP. Output:
 
 ---
 
+## Recording Rules
+
+**Contract:** Business invariant that must hold regardless of implementation — even after a full rebuild.
+**Design:** How the system is built — tech, schema, architecture, patterns.
+**History:** Intent and key decisions that shaped the task outcome.
+
+Only record long-term, global decisions that shape the system broadly.
+Skip anything local, obvious, or recoverable by reading the code.
+A good entry answers "why" or "what was decided" — not "how it was implemented."
+
+Ask:
+- Would this decision matter if the system were rebuilt from scratch?
+- Would a developer miss this by reading the code alone?
+
+If no to both — skip it.
+
+---
+
 ## 1 — Write Task File
 
 Create `/obelisk/history/completed/YYYYMMDD-HHMM-[task-name].md`:
