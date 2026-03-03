@@ -5,6 +5,7 @@ Read the full conversation from this session.
 Extract all relevant information to produce a complete, accurate archive.
 
 ---
+
 ## Guard
 
 Verify the conversation contains a completed implementation before proceeding.
@@ -13,15 +14,33 @@ If no implementation is found → STOP. Output:
 
 ---
 
+## Permissions
+
+This workflow MAY:
+- Create a new file under `/obelisk/history/completed/`
+- Append a new entry to the END of `/obelisk/history/history-log.md`
+- Append new entries under `## Unprocessed` in `contracts-summary.md` and `design-summary.md`
+
+This workflow MUST NOT:
+- Write directly to `contracts-log.md` or `design-log.md`
+- Modify, reorder, or edit any existing content in any file
+- Add or change any headings or sections in summaries
+
+---
+
 ## Recording Rules
 
 **Contract:** Business invariant that must hold regardless of implementation — even after a full rebuild.
+Purpose: Capture durable rules only. Not feature behavior or UI specifics.
+
 **Design:** How the system is built — tech, schema, architecture, patterns.
+Purpose: Capture long-lived architectural decisions. Not implementation details.
+
 **History:** Intent and key decisions that shaped the task outcome.
+Purpose: Help the user recall what was done in 1–2 sentences. No code or detail.
 
 Only record long-term, global decisions that shape the system broadly.
 Skip anything local, obvious, or recoverable by reading the code.
-A good entry answers "why" or "what was decided" — not "how it was implemented."
 
 Ask:
 - Would this decision matter if the system were rebuilt from scratch?
@@ -62,7 +81,7 @@ Create `/obelisk/history/completed/YYYYMMDD-HHMM-[task-name].md`:
 
 ## 2 — Update History
 
-Append to `/obelisk/history/history-log.md`:
+Append at the END of `/obelisk/history/history-log.md`.
 
 ```markdown
 ## YYYYMMDD-HHMM | [Task Name] | TASK
@@ -76,7 +95,7 @@ Append to `/obelisk/history/history-log.md`:
 
 ## 3 — Update Contracts
 
-If new or changed contracts exist, append to `contracts-summary.md → ## Unprocessed`:
+If new or changed contracts exist, append a brief entry under `## Unprocessed` only.
 
 ```markdown
 ## YYYYMMDD-HHMM | [Task Name]
@@ -90,7 +109,7 @@ If new or changed contracts exist, append to `contracts-summary.md → ## Unproc
 
 ## 4 — Update Design
 
-If new or changed design decisions exist, append to `design-summary.md → ## Unprocessed`:
+If new or changed design decisions exist, append a brief entry under `## Unprocessed` only.
 
 ```markdown
 ## YYYYMMDD-HHMM | [Task Name]
@@ -99,6 +118,7 @@ If new or changed design decisions exist, append to `design-summary.md → ## Un
 
 ---
 ```
+
 ---
 
 ## 5 — Auto-Maintain Check
