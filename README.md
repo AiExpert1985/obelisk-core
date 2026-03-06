@@ -2,35 +2,36 @@
 
 _A clarity-first collaboration system for long-lived AI-assisted software._
 
-Obelisk does not constrain AI — it equips it with durable, structured knowledge so strong models can execute correctly over time.
+Obelisk equips AI with durable, structured project knowledge so models can execute reliably over time.
 
-**Designed for** long-lived systems with continuous AI-assisted development where invariants and architecture matter.
-
-**Not designed for:** throwaway prototypes, pure experimentation, replacing manual testing.
+**Designed for:** long-lived systems where architecture, invariants, and decisions must persist.
+**Not designed for:** throwaway prototypes, experimentation, or replacing manual testing.
 
 ---
 
 ## Core Philosophy
 
-AI errors over time are rarely due to weak reasoning. They happen because intent was unclear, scope drifted silently, decisions were forgotten, and architectural context was lost.
+AI errors over time rarely come from weak reasoning. They happen because intent becomes unclear, scope drifts silently, decisions are forgotten, and architectural context is lost.
 
 Obelisk solves this through two pillars:
 
-1. **Discovery** — model fully understands the task, checks it against contracts and design, gets explicit user confirmation before implementing
-2. **Archive** — completed work is documented into structured files that future tasks read and respect
+**Discovery** — The model fully understands the task before implementation. It checks contracts and design, surfaces assumptions, and produces a task summary for user confirmation.
+
+**Archive** — Completed work is recorded into structured files so future tasks start with correct context.
 
 Between discovery and archive, the model works freely.
 
 ---
 
-## Core Layers
+## Knowledge Layers
 
-- **Contracts** — business invariants that must hold even after a full rebuild
-- **Design** — long-lived architectural decisions
-- **History** — chronological memory of completed work
-- **Tasks** — conversationally defined, archived after completion
+**Contracts** — Business invariants that must hold regardless of implementation.
+**Design** — Long-lived architectural decisions that shape how the system is built.
+**History** — Chronological record of tasks, decisions, and outcomes.
 
-Contracts and Design are authoritative. History is informational. Chat is temporary.
+History is the **single source of truth**.
+Contracts and Design summaries are **derived projections** generated from it.
+Chat history is temporary and has no authority.
 
 ---
 
@@ -50,65 +51,67 @@ Contracts and Design are authoritative. History is informational. Chat is tempor
 
 /obelisk/                       # Project state (local, per-project)
 ├── contracts/
-│   ├── contracts-log.md        # Canonical invariants (append-only)
-│   └── contracts-summary.md    # Active projection (regenerated)
+│   └── contracts-summary.md    # Active projection (derived from history)
 ├── design/
-│   ├── design-log.md           # Canonical design decisions (append-only)
-│   └── design-summary.md       # Active projection (regenerated)
+│   └── design-summary.md       # Active projection (derived from history)
 └── history/
-    ├── history-log.md          # Complete project memory
-    └── completed/              # One file per completed task
+    ├── history-log.md          # Canonical record of all tasks and decisions
+    └── completed/              # Detailed file per completed task
 ```
 
 ---
 
-## Authority Model
+## AI Reading Order
 
-Highest → Lowest:
+When working on a task, read files in this order:
 
-1. Contracts Log
-2. Design Log
-3. Contracts Summary
-4. Design Summary
-5. History Log
-6. Chat History
+1. `/obelisk/contracts/contracts-summary.md`
+2. `/obelisk/design/design-summary.md`
+3. `/obelisk-core/guidelines/ai-engineering.md`
+4. `/obelisk/history/history-log.md` — only when running `@maintain-summaries`
 
-Logs are append-only and authoritative. Summaries are working projections.
+Summaries provide current system state. History preserves how the system evolved.
+
+---
+
+## Source of Truth
+
+`history-log.md` records every task and decision chronologically. Each entry contains a task summary, design decisions (if any), and contract changes (if any). Later entries may refine or replace earlier ones.
+
+Summaries represent the current system state. History records the decisions that produced that state.
+History entries record the user request and agreed decisions — not implementation details.
 
 ---
 
 ## Workflow
 
 ### 1 — `@init-project`
-Conversational discovery of system identity, core contracts, and long-lived design decisions. Creates summary files and initializes empty logs.
+Conversational discovery of system identity, core contracts, and foundational design decisions. Initializes summaries and history log.
 
 ### 2 — `@new-task`
-Focused discovery conversation. Model reads contracts, design, and engineering guidelines, clarifies intent and scope, surfaces conflicts, and presents a task summary. User confirms with `implement`. Model then implements freely — scope changes trigger a mini-discovery before proceeding. The conversation is the workspace.
+Focused discovery conversation. The model reads summaries and engineering guidelines, surfaces assumptions, asks clarifying questions, and presents a Task Summary. User confirms with `implement`. Scope changes during implementation trigger a mini-discovery before proceeding.
 
 ### 3 — `@archive-task`
-User-triggered. Model reads the full conversation and produces a canonical task file, updates history-log, contracts-summary, and design-summary.
+User-triggered after implementation. The model writes a detailed task file under `/history/completed/`, appends a structured entry to `history-log.md`, and appends new contracts or design decisions to summaries under `## New`.
 
----
-
-## Auto-Maintain
-
-Each archive adds new entries to contracts-summary and design-summary. Over time these grow stale and verbose. `@maintain-project` compacts the logs and regenerates clean summaries. Triggered automatically by `@archive-task` when either summary reaches ≥ 50 unprocessed line.
+### 4 — `@maintain-summaries`
+User-triggered periodic maintenance. The model reads the entire `history-log.md`, extracts all Contracts and Design entries, keeps only the latest active decisions, and regenerates clean summaries.
 
 ---
 
 ## Commands
 
-| Command                   | Purpose                                             |
-| ------------------------- | --------------------------------------------------- |
-| `@init-project`           | Initialize project structure                        |
-| `@new-task [description]` | Discover, confirm, and implement a task             |
-| `@archive-task`           | Archive completed work and update project knowledge |
-| `@ask-project`            | Query project knowledge                             |
-| `@suggest-task`           | Suggest next high-impact tasks                      |
-| `@hotfix [description]`   | Apply small mechanical fix                          |
-| `@maintain-project`       | Compact and regenerate summaries                    |
-| `@help`                   | Show available commands                             |
+| Command | Purpose |
+|---|---|
+| `@init-project` | Initialize project knowledge |
+| `@new-task [description]` | Discover, confirm, and implement a task |
+| `@archive-task` | Archive completed work and update knowledge |
+| `@maintain-summaries` | Regenerate contracts and design summaries |
+| `@ask-project` | Query project knowledge |
+| `@suggest-task` | Suggest next high-impact tasks |
+| `@hotfix [description]` | Apply small mechanical fix |
+| `@help` | Show available commands |
 
 ---
 
-Obelisk is a clarity amplifier, a memory system, and a contract guardian. It gives strong AI models the freedom to execute — while ensuring that what matters persists.
+Obelisk ensures important decisions outlive chat sessions, model resets, and time. It gives AI the freedom to execute — while ensuring that what matters persists.
