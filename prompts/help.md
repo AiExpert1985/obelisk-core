@@ -10,7 +10,7 @@ description: List available commands
 - `@archive-task` — Archives a completed Obelisk task
 - `@ask-project` — Query project knowledge
 - `@suggest-task` — Get next task suggestions
-- `@maintain-project` — Compact and regenerate summaries
+- `@maintain-summaries` — Compact and regenerate summaries
 - `@help` — Show this list
 
 STOP.

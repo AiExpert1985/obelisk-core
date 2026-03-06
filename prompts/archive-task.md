@@ -19,36 +19,21 @@ If no implementation is found → STOP. Output:
 This workflow MAY:
 - Create a new file under `/obelisk/history/completed/`
 - Append a new entry to the END of `/obelisk/history/history-log.md`
-- Append new entries under `## Unprocessed` in `contracts-summary.md` and `design-summary.md`
+- Append new entries to the end of in `/obelisk/contracts/contracts-summary.md` 
+- Append new entries to the end of in `/obelisk/design/design-summary.md` 
 
 This workflow MUST NOT:
-- Write directly to `contracts-log.md` or `design-log.md`
 - Modify, reorder, or edit any existing content in any file
-- Add or change any headings or sections in summaries
 
 ---
 
-## Recording Rules
+## Definitions
 
-**Contract:** Business invariant that must hold regardless of implementation — even after a full rebuild.
-Purpose: Capture durable rules only. Not feature behavior or UI specifics.
+**Contract:** Business invariant that must hold regardless of implementation — even after a full rebuild. Capture durable rules only — not feature behavior or UI specifics.
 
-**Design:** Project-level or feature-level architectural decisions only.
-Purpose: Capture decisions that shape how the system is built broadly.
-Skip entirely for: UI tweaks, visual adjustments, widget changes, 
-library API usage, refactors without architectural impact, single-screen changes.
+**Design:** Project-level or feature-level architectural decisions that shape how the system is built broadly. Skip UI tweaks, visual changes, single-screen fixes, library API details, or anything recoverable from code.
 
-**History:** Intent and key decisions that shaped the task outcome.
-Purpose: Help the user recall what was done in 1–2 sentences. No code or detail.
-
-Only record long-term, global decisions that shape the system broadly.
-Skip anything local, obvious, or recoverable by reading the code.
-
-Ask:
-- Would this decision matter if the system were rebuilt from scratch?
-- Would a developer miss this by reading the code alone?
-
-If no to both — skip it.
+**History:** Concise summary of what was done and why. No code, no implementation detail.
 
 ---
 
@@ -85,50 +70,48 @@ Create `/obelisk/history/completed/YYYYMMDD-HHMM-[task-name].md`:
 
 Append at the END of `/obelisk/history/history-log.md`.
 
+
 ```markdown
 ## YYYYMMDD-HHMM | [Task Name] | TASK
 
-[Concise summary of intent, key decisions, and outcomes]
+**Task:** [Summary of user request and the agreed goal & decisions after discovery.]
+
+**Design:** [Architectural or feature-level decisions that shape how the system is built.
+Record only decisions that would matter if the system were rebuilt. Omit if none.]
+
+**Contracts:** [Business rules or invariants introduced or changed.
+Must hold regardless of implementation. Omit if none.]
 
 ---
 ```
+
+### Rules
+
+- Be concise — one to three sentences per field maximum
+- High-level only — no code, UI details, pixel values, or method names
+- No repetition — capture each decision once, in the most relevant field
+- Omit fields that do not apply — do not leave blank fields
 
 ---
 
 ## 3 — Update Contracts
 
-If new or changed contracts exist, append a brief entry under `## Unprocessed` only.
-
+If new or changed contracts exist, append to the end of `contracts-summary.md`:
 ```markdown
-## YYYYMMDD-HHMM | [Task Name]
-
-[Consolidated contract changes]
-
----
+YYYYMMDD-HHMM | [Task Name] | [Copy contract entry from history-log — no rewording]
 ```
 
 ---
 
 ## 4 — Update Design
 
-If new or changed design decisions exist, append a brief entry under `## Unprocessed` only.
-
+If new or changed design decisions exist, , append to the end of`## New` in `design-summary.md`:
 ```markdown
-## YYYYMMDD-HHMM | [Task Name]
-
-[Consolidated design decisions]
-
----
+YYYYMMDD-HHMM | [Task Name] | [Copy design entry from history-log — no rewording]
 ```
 
 ---
 
-## 5 — Auto-Maintain Check
-
-If `## Unprocessed` in either summary exceeds 50 lines:
-Run `/obelisk-core/maintain-project.md`
-
----
 
 Output:
 
