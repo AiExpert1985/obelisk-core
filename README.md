@@ -109,7 +109,6 @@ User-triggered periodic maintenance. The model reads the entire `history-log.md`
 | `@maintain-summaries` | Regenerate contracts and design summaries |
 | `@ask-project` | Query project knowledge |
 | `@suggest-task` | Suggest next high-impact tasks |
-| `@hotfix [description]` | Apply small mechanical fix |
 | `@help` | Show available commands |
 
 ---
