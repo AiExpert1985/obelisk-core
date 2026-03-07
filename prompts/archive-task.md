@@ -78,8 +78,14 @@ Append at the END of `/obelisk/history/history-log.md`.
 **Design:** [Architectural or feature-level decisions agreed during discovery.
 Record only decisions that would matter if the system were rebuilt. Omit if none.]
 
-**Contracts:** [Business rules or invariants introduced or changed.
-Must hold regardless of implementation. Omit if none.]
+**Contracts:** [Business rules or invariants introduced or changed. Must hold regardless of implementation. Omit if none. Use the exact format below — copy rule text verbatim from the approved Contract Change block in discovery:]
+
+Contract Change: ADD
+Rule: [exact rule text]
+
+Contract Change: UPDATE
+Old: "[exact previous rule text]"
+New: [exact updated rule text]
 
 **Rejected:** [Approaches, contracts, or design decisions explicitly rejected during discovery and why.
 Omit if none.]
@@ -94,7 +100,7 @@ Omit if none.]
 - No repetition — capture each decision once, in the most relevant field
 - Omit fields that do not apply — do not leave blank fields
 - Rejected Capture explicitly discarded approaches and the reason — prevents revisiting dead ends.
-- Contracts must be explicitly confirmed by the user — never inferred or assumed
+- Contracts must use the exact wording approved during discovery — no paraphrasing. Copy the rule text verbatim from the discovery Contract Change block.
 
 ---
 

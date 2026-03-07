@@ -40,19 +40,21 @@ Do NOT ask about:
 Inference from contracts, design, and existing patterns is allowed.
 All non-trivial assumptions must be confirmed before proceeding.
 
-If a contract conflict is detected:
-```markdown
-⚠️ Contract Conflict
-Conflicts with: "[exact contract text]"
-Options: 1. Adjust task  2. Update contract
-Recommendation: [option + reason]
-```
+If a contract change is detected:
 
-If the task introduces a new business-critical rule:
-```markdown
-📋 New Contract
-Rule: [what it is and why it matters]
-Add? yes/no
+``` markdown
+📋 Contract Change
+
+Type: ADD | UPDATE
+
+Rule: [new contract rule]
+
+If UPDATE:
+Old: "[exact existing contract text]"
+
+Reason: [why this rule is required]
+
+Approve? yes/no
 ```
 
 ## Discovery Output Format

@@ -133,29 +133,20 @@ Create `/obelisk/history/history-log.md`:
 
 ## YYYYMMDD-HHMM | Project Initialization | INIT
 
-## Vision
-[What the system is and why it exists]
 
-## Users
-[Who uses it and how]
+Project Summary
 
-## Screens & Flows (Initial)
-[Initial screen and flow descriptions]
-
-## Core Functionality (Initial)
-[Initial feature descriptions]
-
-## UX & Design Philosophy
-[Interaction and design principles]
-
-## UI & Screen Notes (Initial)
-[Layout, style, component notes]
-
-## Open Ideas
-[Unformalized directions — append only]
-
-## Notes
-[Anything else discussed during init]
+What it is: [description]
+What it is NOT: [explicit boundaries]
+Users: [who and how]
+Core Functionality: [what the system does]
+Screens & Flows: [initial screen and flow descriptions]
+UX & Design Philosophy: [interaction and design principles]
+Core Contracts: [invariants that must always hold]
+Design Decisions: [long-lived architectural choices]
+Non-Goals: [explicit exclusions]
+Open Ideas: [unformalized directions]
+Open Questions: [unresolved items — treated as task-level concerns]
 
 ---
 ```
