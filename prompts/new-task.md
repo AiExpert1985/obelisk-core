@@ -61,13 +61,21 @@ Approve? yes/no
 
 No narration. No thinking out loud. No filler.
 
-**Assumptions:** [assumption] — [basis]
-**Questions:**
-1. [question]
+```markdown
+**Questions:**    
+1. [question]    
    Recommendation: [option] — [reason]
+```
 
-If no questions exist: state "No clarifications needed" and list assumptions only.
-Do not proceed to Task Summary until assumptions are confirmed.
+If no questions exist: state **"No clarifications needed"** and list assumptions only.
+
+If questions exist: **wait for answers before continuing**.
+
+After answers — or if no questions exist — **generate the Task Summary**.
+
+**Do NOT write code or analyze implementation during discovery.**
+
+After the Task Summary → **STOP** and wait for `implement`.
 
 ---
 

@@ -30,7 +30,15 @@ This workflow MUST NOT:
 
 **Contract:** Business invariant that must hold regardless of implementation — even after a full rebuild. Capture durable rules only — not feature behavior or UI specifics.
 
-**Design:** Project-level or feature-level architectural decisions that shape how the system is built broadly. Skip UI tweaks, visual changes, single-screen fixes, library API details, or anything recoverable from code.
+**Design:** Project-level or feature-level architectural decisions that shape how the system is built broadly. Ask: "Would this decision matter if the system were rebuilt from scratch?" If no, omit it.
+
+Do NOT record:
+- Implementation techniques or algorithms
+- Internal class or function names
+- Library usage details or configuration flags
+- Anything recoverable from reading the code
+
+Two sentence maximum. If it can't be said in two sentences, it's probably implementation detail.
 
 **History:** Concise summary of what was done and why. No code, no implementation detail.
 
@@ -96,7 +104,7 @@ Omit if none.]
 ### Rules
 
 - Be concise — one to three sentences per field maximum
-- High-level only — no code, UI details, pixel values, or method names
+- **High-level only** — no code, UI details, pixel values, method names, or implementation specifics recoverable from reading the code.
 - No repetition — capture each decision once, in the most relevant field
 - Omit fields that do not apply — do not leave blank fields
 - Rejected Capture explicitly discarded approaches and the reason — prevents revisiting dead ends.
