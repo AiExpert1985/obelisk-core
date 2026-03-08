@@ -17,7 +17,7 @@ If no task description is provided with this command:
 
 Read silently before asking for task description:
 - `/obelisk/history/history-log.md`
-- `/obelisk/design/design-summary.md`
+- `/obelisk/contracts/contracts-log.md`
 - `/obelisk-core/guidelines/ai-engineering.md`
 
 If any missing → STOP. Output: Use `@init-project` to initialize the project.
@@ -105,7 +105,7 @@ Only proceed when `implement` is received.
 Implement the agreed task. During implementation:
 - Follow the agreed task summary
 - Follow `/obelisk-core/guidelines/ai-engineering.md`
-- Respect `/obelisk/contracts/contracts-summary.md`
+- Respect `/obelisk/contracts/contracts-log.md`
 
 For any follow-up request or scope change:
 - Treat it like a mini-discovery: understand the change, check against contracts and design, surface conflicts if any, confirm understanding before proceeding

@@ -4,7 +4,7 @@ description: Initialize new Obelisk project
 ## Guard
 
 Check that none of these exist:
-- `/obelisk/contracts/contracts-summary.md`
+- `/obelisk/contracts/contracts-log.md`
 - `/obelisk/history/history-log.md`
 
 If any exist → STOP. Output:
@@ -62,29 +62,21 @@ Triggered by user entering `initialize`.
 Use ONLY information established during discovery. Do not infer or expand.
 If discovery was skipped or cut short, populate only what was explicitly established.
 
-### 1 — Create contracts-summary.md
+### 1 — Create contracts-log.md
 
 **Contract:** Business invariant that must hold regardless of implementation — even after a full 
 
-Create `/obelisk/contracts/contracts-summary.md`:
+Create `/obelisk/contracts/contracts-log.md`:
 
 ```markdown
-# Contracts Summary
+# Contracts Log
 
-Generated: YYYY-MM-DD
+## YYYYMMDD-HHMM | Project Initialization | INIT
 
-## System Identity
-_(empty — populated after first maintenance)_
+[All contracts established during discovery, using format:]
 
-## Active Contracts
-_(empty — populated after first maintenance)_
-
-## Non-Goals
-_(empty — populated after first maintenance)_
-
-## New
-
-[All contracts and invariants established during discovery]
+YYYYMMDD-HHMM | Project Initialization | ADD
+Rule: [contract rule]
 ```
 
 ### 2 — Create history-log.md

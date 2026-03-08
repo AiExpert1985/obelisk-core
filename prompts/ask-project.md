@@ -9,21 +9,14 @@ You MUST NOT modify files or trigger workflows.
 
 ## Information Sources
 
-Read in order, stop when question is answered.
+Read only what the question requires. Stop as soon as the question is answered.
 
-### 1. History Log (rationale and evolution)
+- **Contract questions** → `/obelisk/contracts/contracts-log.md` first, history-log only if context needed
+- **Decision / rationale questions** → `/obelisk/history/history-log.md`
+- **Implementation questions** → code, only if log answer is insufficient
+- **Named task questions** → `/obelisk/history/completed/[task-file].md`
 
-- `/obelisk/history/history-log.md`
-
-### 2. Code (implementation verification)
-
-Use only if question concerns current implementation or feature existence.
-
-### 3. Archived Task (optional)
-
-- `/obelisk/history/completed/[task-file].md`
-
-Use only if question references specific implementation details of a named task.
+Do NOT read files speculatively.
 
 ---
 

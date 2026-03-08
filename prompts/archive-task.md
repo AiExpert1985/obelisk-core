@@ -13,19 +13,6 @@ If any of the above is missing → STOP. Output:
 
 ---
 
-## Permissions
-
-This workflow MAY:
-- Create a new file under `/obelisk/history/completed/`
-- Append a new entry to the END of `/obelisk/history/history-log.md`
-- Append new entries to the end of in `/obelisk/contracts/contracts-summary.md` 
-- Append new entries to the end of in `/obelisk/design/design-summary.md` 
-
-This workflow MUST NOT:
-- Modify, reorder, or edit any existing content in any file
-
----
-
 ## 1 — Write Task File
 
 Create `/obelisk/history/completed/YYYYMMDD-HHMM-[task-name].md`:
@@ -65,17 +52,7 @@ Append at the END of `/obelisk/history/history-log.md`.
 
 **Task:** [Concise summary of user request and the agreed goal after discovery. what was done and why. No code, no implementation detail]
 
-**Rejected:** [Approaches, contracts, or design decisions explicitly rejected during discovery and why.
-Omit if none.]
-
-**Contracts:** [Business rules or invariants introduced or changed. Must hold regardless of implementation. Omit if none. Use the exact format below — copy rule text verbatim from the approved Contract Change block in discovery:]
-
-Contract Change: ADD
-Rule: [exact rule text]
-
-Contract Change: UPDATE
-Old: "[exact previous rule text]"
-New: [exact updated rule text]
+**Rejected:** [Concise summary of Approaches, contracts, or design decisions explicitly rejected during discovery and why.Omit if none.]
 
 ---
 ```
@@ -87,16 +64,29 @@ New: [exact updated rule text]
 - No repetition — capture each decision once, in the most relevant field
 - Omit fields that do not apply — do not leave blank fields
 - Rejected Capture explicitly discarded approaches and the reason — prevents revisiting dead ends.
-- Contracts must use the exact wording approved during discovery — no paraphrasing. Copy the rule text verbatim from the discovery Contract Change block.
 
 ---
 
-## 3 — Update Contracts
+## 3 — Update Contracts Log
 
-If new or changed contracts exist, append to the end of `contracts-summary.md`:
+If contract changes exist, append to END of `/obelisk/contracts/contracts-log.md`:
+
 ```markdown
-YYYYMMDD-HHMM | [Task Name] | [Copy contract entry from history-log — no rewording]
+YYYYMMDD-HHMM | [Task Name] | ADD
+Rule: [exact rule text as approved in discovery]
+
+YYYYMMDD-HHMM | [Task Name] | UPDATE
+Old: "[exact previous rule text]"
+New: [exact updated rule text]
+
+YYYYMMDD-HHMM | [Task Name] | REMOVE
+Rule: "[exact rule text removed]"
 ```
+
+Rules:
+- Copy rule text verbatim from the approved Contract Change block. Never paraphrase.
+- Business rules or invariants introduced or changed. Must hold regardless of implementation.
+- Skip if there is no contract change
 
 ---
 
