@@ -35,8 +35,8 @@ Both files are append-only. Chat history is temporary and has no authority.
 ## Repository Structure
 
 ```
-/obelisk-core/                  # Framework prompts (shared, git submodule)
-├── prompts/
+/obelisk-core/                  # Framework prompts
+├── commands/
 │   ├── init-project.md
 │   ├── new-task.md
 │   ├── archive-task.md

@@ -18,7 +18,7 @@ If no task description is provided with this command:
 Read silently before asking for task description:
 - `/obelisk/history/history-log.md`
 - `/obelisk/contracts/contracts-log.md`
-- `/obelisk-core/guidelines/ai-engineering.md`
+- `../guidelines/ai-engineering.md`
 
 If any missing → STOP. Output: Use `@init-project` to initialize the project.
 
@@ -81,8 +81,9 @@ After the Task Summary → **STOP** and wait for `implement`.
 
 ## Task Summary
 
-```markdown
-Task Summary
+**Format:**
+
+Task Summary:
 
 Goal: [what and why]
 Scope: ✓ [included] / ✗ [excluded]
@@ -91,7 +92,7 @@ Assumptions: [confirmed, or "None"]
 Contracts: [new or changed, or "None"]
 Constraints: [limits implementation must respect]
 Risks: [known risks or "None"]
-```
+
 
 After presenting — STOP. You MUST NOT write code or modify files
 Wait for corrections or `implement`.
