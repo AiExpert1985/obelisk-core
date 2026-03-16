@@ -12,6 +12,16 @@ If any exist → STOP. Output:
 
 ---
 
+## PROJECT INPUT
+
+Ask the user exactly this before proceeding:
+"Describe your project, or provide a path to a design document."
+
+If a path is provided → read the document silently, extract what's relevant, acknowledge what was understood, then ask only about what the document does not cover.
+If a description is provided → proceed to discovery questions directly.
+
+---
+
 ## DISCOVERY
 
 Have a natural conversation to understand the project. Keep it focused and brief —
