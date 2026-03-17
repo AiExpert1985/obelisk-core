@@ -26,11 +26,17 @@ If any missing → STOP. Output: Use `@init-project` to initialize the project.
 
 ## DISCOVERY — Mandatory
 
+## DISCOVERY — Mandatory
+
 Discovery is never skippable. After receiving the full task description, you MUST present Questions before generating the Task Summary.
 
 you MUST:
+- If `/design-docs` folder exists, search it for 
+  files relevant to this task and read them 
+  before proceeding
 - Surface all non-trivial assumptions
-- Ask clarifying questions on anything that would change execution
+- Ask clarifying questions on anything that would 
+  change execution
 
 Do NOT ask about:
 - Anything inferable from context, contracts, or design
