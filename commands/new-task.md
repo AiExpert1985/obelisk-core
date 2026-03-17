@@ -29,9 +29,14 @@ If any missing → STOP. Output: Use `@init-project` to initialize the project.
 Discovery is never skippable. After receiving the full task description, you MUST present Questions before generating the Task Summary.
 
 you MUST:
-- If `/design-docs` folder exists, search it for 
-  files relevant to this task and read them 
-  before proceeding
+- If /design-docs folder exists, search it for 
+  files relevant to this task and read them.
+  Understand the relevant design and extract 
+  information that applies to this task.
+  These are design reference documents — lower 
+  priority than contracts and history. Where 
+  conflict exists, contracts override history, 
+  history overrides design-docs.
 - Surface all non-trivial assumptions
 - Ask clarifying questions on anything that would change execution
 
